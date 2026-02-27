@@ -191,6 +191,18 @@ function populateActiveServers() {
         `;
         tbody.appendChild(row);
     });
+    // Update stats
+    updateServerStats();
+}
+
+function updateServerStats() {
+    let totalPlayers = 0;
+    activeServers.forEach(server => {
+        const [current] = server.players.split('/').map(Number);
+        totalPlayers += current;
+    });
+    const statsElement = document.getElementById('serverStats');
+    statsElement.innerHTML = `<strong>${totalPlayers}</strong> players on <strong>${activeServers.length}</strong> servers`;
 }
 
 function populateServerLog() {
@@ -208,18 +220,6 @@ function populateServerLog() {
         tbody.appendChild(row);
     });
 }
-
-/*function refreshServers(event) {
-    const btn = event.target;
-    btn.style.transform = 'rotate(360deg)';
-    btn.style.transition = 'transform 0.5s ease';
-    
-    setTimeout(() => {
-        btn.style.transform = 'rotate(0deg)';
-        // In a real implementation, this would fetch fresh data
-        populateActiveServers();
-    }, 500);
-}*/
 
 function openModal(modalId) {
     const modal = document.getElementById(modalId);

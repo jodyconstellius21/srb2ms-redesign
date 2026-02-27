@@ -14,6 +14,12 @@
 <body>
     <div class="container">
         <header>
+
+            <!-- Back Button -->
+            <a href="https://mb.srb2.org" class="back-button">
+                ← Back to SRB2 Message Board
+            </a>
+
             <!-- Theme Toggle -->
             <div class="theme-toggle">
                 <button class="theme-btn active" id="darkMode" title="Dark Mode">
@@ -42,8 +48,11 @@
                 Server Address:<br>
                 https://mb.srb2.org/MS/0
             </div>
+            <div class="stats-display" id="serverStats">
+                <strong>0</strong> players on <strong>0</strong> servers
+            </div>
             <div class="header-actions">
-                <button class="btn" onclick="openModal('rulesModal')">Server Rules</button>
+                <button class="btn" onclick="openModal('rulesModal')">Hosting Rules</button>
                 <button class="btn" onclick="openModal('contactModal')">Contact Info</button>
             </div>
         </header>
@@ -95,7 +104,7 @@
     <div id="rulesModal" class="modal" onclick="closeModalOnOutsideClick(event, 'rulesModal')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h3>Master Server Rules</h3>
+                <h3>Hosting? Read the rules</h3>
                 <button class="close-btn" onclick="closeModal('rulesModal')">&times;</button>
             </div>
             <div class="modal-body">
