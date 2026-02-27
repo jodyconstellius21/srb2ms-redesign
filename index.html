@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRB2 Master Server Browser</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Theme Toggle -->
+            <div class="theme-toggle">
+                <button class="theme-btn active" id="darkMode" title="Dark Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <button class="theme-btn" id="lightMode" title="Light Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+            </div>
+
+            <img src="srb2org-banner.png" alt="Sonic Robo Blast 2" style="max-width: 600px; width: 100%; height: auto; margin-bottom: 15px;">            
+            <h1>Server Browser</h1>
+            <div class="server-address">
+                Server Address:<br>
+                https://mb.srb2.org/MS/0
+            </div>
+            <div class="header-actions">
+                <button class="btn" onclick="openModal('rulesModal')">Server Rules</button>
+                <button class="btn" onclick="openModal('contactModal')">Contact Info</button>
+            </div>
+        </header>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Active Servers</h2>
+                <button class="btn btn-refresh">↻ Refresh</button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table id="activeServers">
+                    <thead>
+                        <tr>
+                            <th>Query</th>
+                            <th>IP Address</th>
+                            <th>Server Name</th>
+                            <th>Version</th>
+                            <th>Players</th>
+                            <th>Gametype</th>
+                            <th>Ping</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activeServersBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Server Log</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table id="serverLog">
+                    <thead>
+                        <tr>
+                            <th>IP Address</th>
+                            <th>Server Name</th>
+                            <th>Version</th>
+                            <th>Last Seen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="serverLogBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rules Modal -->
+    <div id="rulesModal" class="modal" onclick="closeModalOnOutsideClick(event, 'rulesModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Master Server Rules</h3>
+                <button class="close-btn" onclick="closeModal('rulesModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>1. No mandatory music wad downloads above 20MB</h4>
+                <p>If you would like to host a larger music WAD, make sure it isn't a mandatory download so players aren't required to have it to join your server.</p>
+
+                <h4>2. No advertising in server titles</h4>
+                <p>Exceptions to this rule include WAD hosting services, and domain names that point to the server. A WAD hosting service should ideally be a file index, and must contain only the files that the server is actually using.</p>
+
+                <h4>3. No inappropriate content in server titles or addons</h4>
+                <p>This includes slurs, links to pirated content or pornography, or other content generally deemed inappropriate. Also, server titles should not contain swearing.</p>
+
+                <h4>4. No netgame hacking</h4>
+                <p>By hacking we specifically mean:</p>
+                <ul>
+                    <li>Using illegitimate EXEs to cheat</li>
+                    <li>Forcing clients or servers to crash using certain add-ons or exploits</li>
+                    <li>Hosting add-ons that modify clients' settings and/or interfere with the vanilla game even after restarting</li>
+                </ul>
+
+                <h4>5. No netgame harassment</h4>
+                <p>Harassment includes but is not limited to:</p>
+                <ul>
+                    <li>Spamming</li>
+                    <li>Flaming</li>
+                    <li>Sexual conversations</li>
+                </ul>
+
+                <h4>6. No hosting unauthorized ports or edits of released content</h4>
+                <p>Respect the artists in our community by keeping such files to yourself.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal" onclick="closeModalOnOutsideClick(event, 'contactModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Contact Information</h3>
+                <button class="close-btn" onclick="closeModal('contactModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>If you've been banned or delisted, check <a href="#" style="color: var(--accent-primary); text-decoration: underline;">here</a>.</p>
+                <p>For other purposes, use the <a href="#" style="color: var(--accent-primary); text-decoration: underline;">"Talk to the Staff"</a> section on the SRB2 Message Board.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Server Info Modal -->
+    <div id="serverInfoModal" class="modal" onclick="closeModalOnOutsideClick(event, 'serverInfoModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Server Information</h3>
+                <button class="close-btn" onclick="closeModal('serverInfoModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="serverInfoContent">
+                <!-- Server info will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- External JS -->
+    <script src="script.js"></script>
+</body>
+</html>
